@@ -41,6 +41,18 @@ jobs:
           path: |
             release.zip
             !venv/
+       
+      - name: Lint with flake8
+        run: |
+          flake8 ./buzz/generator.py ./app.py --count --select=E9,F63,F7,F82 --show-source --statistics --ignore=F821
+          flake8 ./buzz/generator.py ./app.py --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+      
+      - name: Test with pytest
+        run: |
+          python -m pytest -v tests/test_generator.py           
+
+
+
 
   deploy:
     runs-on: ubuntu-latest
